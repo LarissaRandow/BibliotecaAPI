@@ -11,47 +11,47 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProdutosController : ControllerBase
+    public class ReservasController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public ProdutosController(AppDbContext context)
+        public ReservasController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Produtos
+        // GET: api/Reservas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
-            return await _context.Produtos.ToListAsync();
+            return await _context.Reserva.ToListAsync();
         }
 
-        // GET: api/Produtos/5
+        // GET: api/Reservas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Produto>> GetProduto(int id)
+        public async Task<ActionResult<Reserva>> GetReserva(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
+            var reserva = await _context.Reserva.FindAsync(id);
 
-            if (produto == null)
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            return produto;
+            return reserva;
         }
 
-        // PUT: api/Produtos/5
+        // PUT: api/Reservas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduto(int id, Produto produto)
+        public async Task<IActionResult> PutReserva(int id, Reserva reserva)
         {
-            if (id != produto.Id)
+            if (id != reserva.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(produto).State = EntityState.Modified;
+            _context.Entry(reserva).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProdutoExists(id))
+                if (!ReservaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Produtos
+        // POST: api/Reservas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Produto>> PostProduto(Produto produto)
+        public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
         {
-            _context.Produtos.Add(produto);
+            _context.Reserva.Add(reserva);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
+            return CreatedAtAction("GetReserva", new { id = reserva.Id }, reserva);
         }
 
-        // DELETE: api/Produtos/5
+        // DELETE: api/Reservas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduto(int id)
+        public async Task<IActionResult> DeleteReserva(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
-            if (produto == null)
+            var reserva = await _context.Reserva.FindAsync(id);
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            _context.Produtos.Remove(produto);
+            _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProdutoExists(int id)
+        private bool ReservaExists(int id)
         {
-            return _context.Produtos.Any(e => e.Id == id);
+            return _context.Reserva.Any(e => e.Id == id);
         }
     }
 }
