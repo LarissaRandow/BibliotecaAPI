@@ -87,6 +87,15 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLivro(int id)
         {
+
+            var reservas =_context.Reserva.Where(l => l.Livro == id).ToList();
+
+            foreach(var reserva in reservas)
+            {
+                _context.Reserva.Remove(reserva);
+            }
+            await _context.SaveChangesAsync();
+
             var livro = await _context.Livros.FindAsync(id);
             if (livro == null)
             {
