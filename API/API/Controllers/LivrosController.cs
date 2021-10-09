@@ -41,6 +41,30 @@ namespace API.Controllers
             return livro;
         }
 
+        [HttpGet("Genero")]
+        public async Task<ActionResult<IEnumerable<Livro>>> GetLivroGenero(int id)
+        {
+            return await _context.Livros.Where(p => p.Genero == id).ToListAsync();
+
+        }
+
+        [HttpGet("Nome")]
+        public async Task<ActionResult<IEnumerable<Livro>>> GetLivroNome(string nome)
+        {
+            var livros = await _context.Livros.ToListAsync();
+            List<Livro> lista = new List<Livro>();
+
+            foreach (var livro in livros)
+            {
+                if(livro.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase))
+                {
+                    lista.Add(livro);
+                }
+            }
+
+            return lista;
+        }
+
         // PUT: api/Livros/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
