@@ -27,6 +27,20 @@ namespace API.Controllers
             return await _context.Bibliotecarios.ToListAsync();
         }
 
+        [HttpGet("Login")]
+        public async Task<ActionResult<bool>> GetLivroNome(string email, string senha)
+        {
+            var logins = await _context.Bibliotecarios.ToListAsync();
+
+            foreach (var login in logins)
+            {
+                if (login.Login == email && login.Senha == senha)
+                    return true;
+            }
+
+            return false;
+        }
+
         // GET: api/Bibliotecarios/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bibliotecario>> GetBibliotecario(int id)
