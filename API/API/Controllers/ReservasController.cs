@@ -96,10 +96,15 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteReserva(int id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
+            
             if (reserva == null)
             {
                 return NotFound();
             }
+
+            var livro = await _context.Livros.FindAsync(reserva.Livro);
+            livro.Reservado = false;
+            _context.Livros.Update(livro);
 
             _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
