@@ -27,6 +27,12 @@ namespace API.Controllers
             return await _context.Livros.ToListAsync();
         }
 
+        [HttpGet("count")]
+        public int Count()
+        {
+            return _context.Livros.Count();
+        }
+
         // GET: api/Livros/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Livro>> GetLivro(int id)
