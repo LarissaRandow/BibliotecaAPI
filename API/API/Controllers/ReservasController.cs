@@ -78,7 +78,7 @@ namespace API.Controllers
         public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
         {
             var livro = await _context.Livros.FindAsync(reserva.Livro);
-            if(!livro.Reservado)
+            if (!livro.Reservado)
             {
                 livro.Reservado = true;
                 _context.Livros.Update(livro);
@@ -86,7 +86,7 @@ namespace API.Controllers
                 _context.Reserva.Add(reserva);
                 await _context.SaveChangesAsync();
             }
-            
+
 
             return CreatedAtAction("GetReserva", new { id = reserva.Id }, reserva);
         }
@@ -96,7 +96,7 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteReserva(int id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
-            
+
             if (reserva == null)
             {
                 return NotFound();
