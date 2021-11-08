@@ -51,11 +51,12 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(reserva).State = EntityState.Modified;
+            _context.Update(reserva);
 
             try
             {
                 await _context.SaveChangesAsync();
+                _context.Entry(reserva).State = EntityState.Detached;
             }
             catch (DbUpdateConcurrencyException)
             {
